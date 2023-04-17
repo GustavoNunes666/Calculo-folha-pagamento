@@ -1,0 +1,65 @@
+import java.util.Scanner;
+
+public class FolhaDePagamento {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        String nome, cpf, cargo;
+        double salarioBase, horasTrabalhadas, adicionais, descontos, beneficios, valorHora;
+
+        System.out.println("Informe o nome do funcionário:");
+        nome = input.nextLine();
+        System.out.println("Informe o CPF do funcionário:");
+        cpf = input.nextLine();
+        System.out.println("Informe o cargo do funcionário:");
+        cargo = input.nextLine();
+        System.out.println("Informe o salário base do funcionário:");
+        salarioBase = input.nextDouble();
+        System.out.println("Informe as horas trabalhadas no mês:");
+        horasTrabalhadas = input.nextDouble();
+        System.out.println("Informe o valor dos adicionais:");
+        adicionais = input.nextDouble();
+        System.out.println("Informe o valor dos descontos:");
+        descontos = input.nextDouble();
+        System.out.println("Informe o valor dos benefícios:");
+        beneficios = input.nextDouble();
+
+        // Calcula o valor da hora trabalhada
+        valorHora = salarioBase / horasTrabalhadas;
+
+        // Calcula os adicionais de periculosidade e insalubridade
+        double adicionalPericulosidade = 0.0;
+        double adicionalInsalubridade = 0.0;
+        boolean recebePericulosidade = false;
+        boolean recebeInsalubridade = false;
+        System.out.println("O funcionário recebe adicional de periculosidade? (S/N)");
+        String resposta = input.next();
+        if (resposta.equalsIgnoreCase("S")) {
+            recebePericulosidade = true;
+            adicionalPericulosidade = salarioBase * 0.3;
+        }
+        System.out.println("O funcionário recebe adicional de insalubridade? (S/N)");
+        resposta = input.next();
+        if (resposta.equalsIgnoreCase("S")) {
+            recebeInsalubridade = true;
+            adicionalInsalubridade = salarioBase * 0.2;
+        }
+
+        // Calcula o valor do vale transporte e do vale alimentação
+        double valeTransporte = 0.0;
+        double valeAlimentacao = 0.0;
+        double salarioBruto = salarioBase + adicionais + beneficios;
+        if (salarioBruto > 2000.0) {
+            valeTransporte = salarioBase * 0.06;
+            valeAlimentacao = salarioBase * 0.1;
+        }
+
+        // Calcula o desconto de INSS, FGTS e IRRF
+        double inss = salarioBruto * 0.11;
+        double fgts = salarioBruto * 0.08;
+        double irrf = 0.0;
+        double salarioLiquido = salarioBruto - descontos - inss - fgts;
+        if (salarioLiquido > 1903.98 && salarioLiquido <= 2826.65) {
+            irrf = (salarioLiquido * 0.075) - 142.80;
+        } else if (salarioLiquido > 2826.65 && salarioLiquido <= 3751.05) {
+            irrf = (salarioLiquido * 0.15) - 354.80;
+        } else if (salarioLiquido > 3751.05 && salarioLiquido <= 4664.68
