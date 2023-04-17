@@ -1,0 +1,68 @@
+import java.util.Scanner;
+
+public class FolhaPagamento {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // coleta de dados do funcionário
+        System.out.println("Digite o nome do funcionário: ");
+        String nome = scanner.nextLine();
+
+        System.out.println("Digite o CPF do funcionário: ");
+        String cpf = scanner.nextLine();
+
+        System.out.println("Digite o cargo ocupado pelo funcionário: ");
+        String cargo = scanner.nextLine();
+
+        System.out.println("Digite o salário base do funcionário: ");
+        double salarioBase = scanner.nextDouble();
+
+        System.out.println("Digite a quantidade de horas trabalhadas no mês: ");
+        int horasTrabalhadas = scanner.nextInt();
+
+        System.out.println("Digite o valor dos adicionais (periculosidade e insalubridade) recebidos: ");
+        double adicionais = scanner.nextDouble();
+
+        System.out.println("Digite o valor dos descontos (INSS, FGTS e IRRF) aplicados: ");
+        double descontos = scanner.nextDouble();
+
+        System.out.println("Digite o valor dos benefícios (vale transporte e vale alimentação) recebidos: ");
+        double beneficios = scanner.nextDouble();
+
+        // cálculo dos valores da folha de pagamento
+        double valorHora = salarioBase / horasTrabalhadas;
+        double valorPericulosidade = 0;
+        double valorInsalubridade = 0;
+
+        // verifica se o funcionário tem direito ao adicional de periculosidade
+        System.out.println("O funcionário tem direito ao adicional de periculosidade? (S/N)");
+        String respostaPericulosidade = scanner.next();
+        if (respostaPericulosidade.equalsIgnoreCase("S")) {
+            valorPericulosidade = (salarioBase + adicionais) * 0.3;
+        }
+
+        // verifica se o funcionário tem direito ao adicional de insalubridade
+        System.out.println("O funcionário tem direito ao adicional de insalubridade? (S/N)");
+        String respostaInsalubridade = scanner.next();
+        if (respostaInsalubridade.equalsIgnoreCase("S")) {
+            valorInsalubridade = (salarioBase + adicionais) * 0.2;
+        }
+
+        double valorValeTransporte = salarioBase * 0.06;
+        double valorValeAlimentacao = salarioBase * 0.1;
+
+        double valorINSS = salarioBase * 0.11;
+        double valorFGTS = salarioBase * 0.08;
+        double valorIRRF = salarioBase * 0.15 - descontos;
+
+        double salarioLiquido = salarioBase + valorPericulosidade + valorInsalubridade + beneficios - valorINSS - valorFGTS - valorIRRF;
+
+        // exibição do relatório de folha de pagamento
+        System.out.println("\nRelatório de Folha de Pagamento:");
+        System.out.println("Nome do funcionário: " + nome);
+        System.out.println("CPF do funcionário: " + cpf);
+        System.out.println("Cargo do funcionário: " + cargo);
+        System.out.println("Salário Base do funcionário: " + salarioBase);
+        System.out.println("Horas trabalhadas no mês: " + horasTrabalhadas);
+        System.out.println("Valor da hora trabalhada: " + valorHora);
+        System.out.println("Valor do adicional de: '' +valorAdicional);
